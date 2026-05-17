@@ -16,13 +16,14 @@ import 'routes/route_manager.dart';
 void main() async {
   // Ensures Flutter binding is initialized before async operations
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Initialize Supabase connection with project credentials
   await Supabase.initialize(
     url: 'https://yjxcrjbcidsgkefamsbo.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlqeGNyamJjaWRzZ2tlZmFtc2JvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1OTU2NzYsImV4cCI6MjA5NDE3MTY3Nn0.dLGDSTAtN-fQ6MgfcQ_mZVcZMoDiUFmPBOg_cF0S8Ys',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlqeGNyamJjaWRzZ2tlZmFtc2JvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1OTU2NzYsImV4cCI6MjA5NDE3MTY3Nn0.dLGDSTAtN-fQ6MgfcQ_mZVcZMoDiUFmPBOg_cF0S8Ys',
   );
-  
+
   runApp(const MyApp());
 }
 
@@ -41,19 +42,19 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ApplicationViewModel()),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,  // Removes debug banner in top-right
+        debugShowCheckedModeBanner: false, // Removes debug banner in top-right
         title: 'Student Assistant App',
-        initialRoute: RouteManager.splash,   // Start with auth check
-        onGenerateRoute: RouteManager.generateRoute,  // Centralized navigation
-        theme: _buildTheme(),  // Custom light theme with brand colors
+        initialRoute: RouteManager.splash, // Start with auth check
+        onGenerateRoute: RouteManager.generateRoute, // Centralized navigation
+        theme: _buildTheme(), // Custom light theme with brand colors
       ),
     );
   }
-  
+
   // ================================================================
   // THEME CONFIGURATION
   // ================================================================
-  
+
   /// Builds custom light theme for consistent app styling
   /// Uses Material 3 design with Poppins font and brand colors
   ThemeData _buildTheme() {
@@ -61,7 +62,7 @@ class MyApp extends StatelessWidget {
       useMaterial3: true,
       brightness: Brightness.light,
       primaryColor: const Color(0xFF4A6FA5),
-      
+
       // Color scheme based on seed color
       colorScheme: ColorScheme.fromSeed(
         seedColor: const Color(0xFF4A6FA5),
@@ -69,10 +70,10 @@ class MyApp extends StatelessWidget {
         secondary: const Color(0xFF6B9AC4),
         tertiary: const Color(0xFF2C3E50),
       ),
-      
+
       // Global font family
       textTheme: GoogleFonts.poppinsTextTheme(),
-      
+
       // AppBar styling
       appBarTheme: AppBarTheme(
         backgroundColor: const Color(0xFF4A6FA5),
@@ -85,7 +86,7 @@ class MyApp extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      
+
       // Elevated button styling
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -98,28 +99,26 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      
+
       // Card styling
       cardTheme: CardThemeData(
         elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         color: Colors.white,
       ),
-      
+
       // Input field styling
       inputDecorationTheme: InputDecorationTheme(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: Color(0xFF4A6FA5), width: 2),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
       ),
     );
   }
-}
 }

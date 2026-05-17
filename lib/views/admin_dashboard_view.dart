@@ -781,8 +781,9 @@ class _AdminDashboardViewState extends State<AdminDashboardView> {
 
               if (mounted) {
                 if (success) {
-                  if (isApproving)
+                  if (isApproving) {
                     _confettiController.play(); // Celebrate approvals!
+                  }
                   await _loadApplications();
                   setState(() {});
                 }
