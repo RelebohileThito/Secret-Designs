@@ -166,4 +166,207 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
+  // ================================================================
+  // UI COMPONENT BUILDERS
+  // ================================================================
+
+  /// Animated login/signup card with fade-in and scale animation
+  Widget _buildAnimatedCard() {
+    return TweenAnimationBuilder(
+      tween: Tween<double>(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 500),
+      builder: (context, value, child) {
+        return Opacity(
+          opacity: value,
+          child: Transform.scale(scale: value, child: child),
+        );
+      },
+      child: Card(
+        elevation: 8,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildIcon(),
+                const SizedBox(height: 24),
+                _buildTitle(),
+                const SizedBox(height: 8),
+                _buildSubtitle(),
+                const SizedBox(height: 32),
+                _buildEmailField(),
+                const SizedBox(height: 16),
+                _buildPasswordField(),
+                if (_isSignUp) ...[
+                  const SizedBox(height: 16),
+                  _buildConfirmPasswordField(),
+                ],
+                const SizedBox(height: 32),
+                _buildSubmitButton(),
+                const SizedBox(height: 16),
+                _buildToggleModeButton(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Logo icon that changes based on mode (Sign Up vs Login)
+  Widget _buildIcon() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFF4A6FA5).withValues(alpha: 0.1),
+        shape: BoxShape.circle,
+      ),
+      child: Icon(
+        _isSignUp ? Icons.person_add_alt_1 : Icons.school,
+        size: 60,
+        color: const Color(0xFF4A6FA5),
+      ),
+    );
+  }
+
+  /// Main title text ("Welcome Back" or "Create Account")
+  Widget _buildTitle() {
+    return Text(
+      _isSignUp ? 'Create Account' : 'Welcome Back',
+      style: GoogleFonts.poppins(
+        fontSize: 28,
+        fontWeight: FontWeight.bold,
+        color: const Color(0xFF2C3E50),
+      ),
+    );
+  }
+
+  /// Subtitle text ("Login to continue" or "Sign up to get started")
+  Widget _buildSubtitle() {
+    return Text(
+      _isSignUp ? 'Sign up to get started' : 'Login to continue',
+      style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey[600]),
+    );
+  }
+
+  /// Email input field with validation
+  Widget _buildEmailField() {
+    return TextFormField(
+      controller: _emailController,
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.email_outlined),
+        labelText: 'Email',
+        hintText: 'your@email.com',
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) return 'Enter your email';
+        if (!value.contains('@')) return 'Enter valid email';
+        return null;
+      },
+    );
+  }
+
+  /// Password input field with visibility toggle
+  Widget _buildPasswordField() {
+    return TextFormField(
+      controller: _passwordController,
+      obscureText: _obscurePassword,
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.lock_outline),
+        labelText: 'Password',
+        suffixIcon: IconButton(
+          icon: Icon(
+            _obscurePassword ? Icons.visibility_off : Icons.visibility,
+          ),
+          onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) return 'Enter your password';
+        if (value.length < 6) return 'Password must be at least 6 characters';
+        return null;
+      },
+    );
+  }
+
+  /// Confirm password field (only shown in Sign Up mode)
+  Widget _buildConfirmPasswordField() {
+    return TextFormField(
+      controller: _confirmPasswordController,
+      obscureText: _obscureConfirmPassword,
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.lock_outline),
+        labelText: 'Confirm Password',
+        suffixIcon: IconButton(
+          icon: Icon(
+            _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
+          ),
+          onPressed: () => setState(
+            () => _obscureConfirmPassword = !_obscureConfirmPassword,
+          ),
+        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) return 'Confirm your password';
+        return null;
+      },
+    );
+  }
+
+  /// Submit button (Login or Sign Up) with loading indicator
+  Widget _buildSubmitButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: _isLoading
+            ? null
+            : (_isSignUp ? _handleSignUp : _handleLogin),
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+        child: _isLoading
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            : Text(
+                _isSignUp ? 'Sign Up' : 'Login',
+                style: const TextStyle(fontSize: 16),
+              ),
+      ),
+    );
+  }
+
+  /// Toggle button to switch between Login and Sign Up modes
+  Widget _buildToggleModeButton() {
+    return TextButton(
+      onPressed: () {
+        setState(() {
+          _isSignUp = !_isSignUp;
+          // Clear form fields when switching modes
+          _emailController.clear();
+          _passwordController.clear();
+          _confirmPasswordController.clear();
+        });
+      },
+      child: Text(
+        _isSignUp
+            ? 'Already have an account? Login'
+            : "Don't have an account? Sign Up",
+        style: GoogleFonts.poppins(color: const Color(0xFF4A6FA5)),
+      ),
+    );
+  }
+}
 
