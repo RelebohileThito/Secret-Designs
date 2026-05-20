@@ -1,3 +1,2 @@
-# secret_design
-
-A new Flutter project.
+# Secret Design
+Student Assistant Application
