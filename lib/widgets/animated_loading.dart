@@ -1,7 +1,7 @@
-// ================================================================
+// ==================================================================================================
 // Secret Design - Student Assistant Application
 // Members: Lebohang Molise (224078106), Relebohile Thito (221027701), Tshepo Masimong (223081118)
-// ================================================================
+// ==================================================================================================
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -50,4 +50,3 @@ class AnimatedLoading extends StatelessWidget {
     );
   }
 }
-
