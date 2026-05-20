@@ -180,4 +180,332 @@ class _ApplicationFormViewState extends State<ApplicationFormView> {
     }
   }
 
+  // ================================================================
+  // UI BUILD METHODS
+  // ================================================================
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Student Assistant Application'),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildPersonalInfoSection(),
+              const SizedBox(height: 24),
+              const Divider(),
+              const SizedBox(height: 16),
+              _buildModule1Section(),
+              const SizedBox(height: 24),
+              _buildModule2Section(),
+              const SizedBox(height: 24),
+              const Divider(),
+              const SizedBox(height: 16),
+              _buildEligibilitySection(),
+              const SizedBox(height: 24),
+              const Divider(),
+              const SizedBox(height: 16),
+              _buildDocumentSection(),
+              const SizedBox(height: 32),
+              _buildSubmitButton(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ================================================================
+  // FORM SECTION BUILDERS
+  // ================================================================
+
+  /// Section 1: Personal Information (Name, Student Number, Year of Study)
+  Widget _buildPersonalInfoSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Personal Information',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 16),
+
+        // Full Name Field
+        TextFormField(
+          controller: _nameController,
+          decoration: const InputDecoration(
+            labelText: 'Full Name',
+            border: OutlineInputBorder(),
+            prefixIcon: Icon(Icons.person),
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter your full name';
+            }
+            return null;
+          },
+        ),
+        const SizedBox(height: 16),
+
+        // Student Number Field
+        TextFormField(
+          controller: _studentNumberController,
+          decoration: const InputDecoration(
+            labelText: 'Student Number',
+            border: OutlineInputBorder(),
+            prefixIcon: Icon(Icons.numbers),
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter your student number';
+            }
+            if (value.length < 8) {
+              return 'Enter a valid student number';
+            }
+            return null;
+          },
+        ),
+        const SizedBox(height: 16),
+
+        // Year of Study Dropdown
+        DropdownButtonFormField<int>(
+          value: _yearOfStudy,
+          decoration: const InputDecoration(
+            labelText: 'Year of Study',
+            border: OutlineInputBorder(),
+            prefixIcon: Icon(Icons.school),
+          ),
+          items: _years.map((year) {
+            return DropdownMenuItem(value: year, child: Text('Year $year'));
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _yearOfStudy = value!;
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  /// Section 2: First Module (Required)
+  Widget _buildModule1Section() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Module 1 (Required)',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 16),
+
+        // Module 1 Academic Level Dropdown
+        DropdownButtonFormField<String>(
+          value: _module1Level,
+          decoration: const InputDecoration(
+            labelText: 'Academic Level',
+            border: OutlineInputBorder(),
+          ),
+          items: _levels.map((level) {
+            return DropdownMenuItem(value: level, child: Text(level));
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _module1Level = value!;
+            });
+          },
+        ),
+        const SizedBox(height: 16),
+
+        // Module 1 Name/Code Field
+        TextFormField(
+          controller: _module1NameController,
+          decoration: const InputDecoration(
+            labelText: 'Module Name/Code',
+            border: OutlineInputBorder(),
+            hintText: 'e.g., TPG316C, SOD316C',
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter the module name';
+            }
+            return null;
+          },
+        ),
+      ],
+    );
+  }
+
+  /// Section 3: Second Module (Optional)
+  /// Toggle checkbox determines if second module fields are shown
+  Widget _buildModule2Section() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Checkbox to enable second module
+        CheckboxListTile(
+          title: const Text('Apply for a second module?'),
+          value: _hasModule2,
+          onChanged: (value) {
+            setState(() {
+              _hasModule2 = value!;
+            });
+          },
+          activeColor: Colors.blue,
+        ),
+
+        // Conditional fields for second module
+        if (_hasModule2) ...[
+          const SizedBox(height: 8),
+
+          // Module 2 Academic Level Dropdown
+          DropdownButtonFormField<String>(
+            value: _module2Level,
+            decoration: const InputDecoration(
+              labelText: 'Academic Level (Module 2)',
+              border: OutlineInputBorder(),
+            ),
+            items: _levels.map((level) {
+              return DropdownMenuItem(value: level, child: Text(level));
+            }).toList(),
+            onChanged: (value) {
+              setState(() {
+                _module2Level = value!;
+              });
+            },
+          ),
+          const SizedBox(height: 16),
+
+          // Module 2 Name/Code Field
+          TextFormField(
+            controller: _module2NameController,
+            decoration: const InputDecoration(
+              labelText: 'Module Name/Code (Module 2)',
+              border: OutlineInputBorder(),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
+  /// Section 4: Eligibility Confirmation Checkbox
+  Widget _buildEligibilitySection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Eligibility Confirmation',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        CheckboxListTile(
+          title: const Text(
+            'I confirm that I meet the minimum requirements for this position',
+          ),
+          value: _isEligible,
+          onChanged: (value) {
+            setState(() {
+              _isEligible = value!;
+            });
+          },
+          activeColor: Colors.blue,
+        ),
+      ],
+    );
+  }
+
+  /// Section 5: Document Upload with visual feedback
+  Widget _buildDocumentSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Supporting Documentation',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        const Text(
+          'Please upload a screenshot/image of your academic transcript or CV (JPEG, PNG only)',
+          style: TextStyle(fontSize: 12, color: Colors.grey),
+        ),
+        const SizedBox(height: 16),
+
+        // Document upload area
+        GestureDetector(
+          onTap: _pickDocument,
+          child: Container(
+            height: 150,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey, width: 2),
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.grey[50],
+            ),
+            child: _imageData != null
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.insert_drive_file,
+                        size: 40,
+                        color: Colors.green,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        _fileName ?? 'Document selected',
+                        style: const TextStyle(fontSize: 12),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 4),
+                      const Text(
+                        'Tap to change',
+                        style: TextStyle(fontSize: 10, color: Colors.blue),
+                      ),
+                    ],
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.cloud_upload, size: 40, color: Colors.grey),
+                      SizedBox(height: 8),
+                      Text('Tap to select image'),
+                      Text(
+                        '(JPEG, PNG)',
+                        style: TextStyle(fontSize: 10, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Submit Button with loading state
+  Widget _buildSubmitButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: _isUploading ? null : _submitForm,
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+        ),
+        child: _isUploading
+            ? const SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            : const Text('Submit Application'),
+      ),
+    );
+  }
+}
