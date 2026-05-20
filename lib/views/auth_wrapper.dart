@@ -76,4 +76,19 @@ class _AuthWrapperState extends State<AuthWrapper> {
     });
   }
 
+  // ================================================================
+  // UI BUILD METHOD
+  // ================================================================
+
+  @override
+  Widget build(BuildContext context) {
+    // Show loading spinner while checking authentication status
+    if (_isChecking) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
+    // Return empty widget after navigation (prevents flashing)
+    return const SizedBox.shrink();
+  }
+}
 
