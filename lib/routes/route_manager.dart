@@ -58,6 +58,10 @@ class RouteManager {
 
       case adminDashboard:
         return MaterialPageRoute(builder: (_) => const AdminDashboardView());
+
+      default:
+        // Handle undefined routes gracefully
+        throw FormatException("Route not found: ${settings.name}");
     }
   }
 }
