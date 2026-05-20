@@ -20,6 +20,7 @@ void main() async {
   // Initialize Supabase connection with project credentials
   await Supabase.initialize(
     url: 'https://yjxcrjbcidsgkefamsbo.supabase.co',
+
     anonKey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlqeGNyamJjaWRzZ2tlZmFtc2JvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1OTU2NzYsImV4cCI6MjA5NDE3MTY3Nn0.dLGDSTAtN-fQ6MgfcQ_mZVcZMoDiUFmPBOg_cF0S8Ys',
   );
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
         ChangeNotifierProvider(create: (_) => ApplicationViewModel()),
       ],
+
       child: MaterialApp(
         debugShowCheckedModeBanner: false, // Removes debug banner in top-right
         title: 'Student Assistant App',
@@ -51,7 +53,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-    // ================================================================
+  // ================================================================
   // THEME CONFIGURATION
   // ================================================================
 
@@ -114,6 +116,7 @@ class MyApp extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: Color(0xFF4A6FA5), width: 2),
         ),
+
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 16,
@@ -122,7 +125,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-
-
