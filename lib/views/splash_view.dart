@@ -1,5 +1,5 @@
 // ================================================================
-// GROUP S - Student Assistant Application
+// Secret Design - Student Assistant Application
 // Members: Lebohang Molise (224078106), Relebohile Thito (221027701), Tshepo Masimong (223081118)
 // ================================================================
 
