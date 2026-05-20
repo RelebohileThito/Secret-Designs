@@ -51,74 +51,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  // ================================================================
-  // THEME CONFIGURATION
-  // ================================================================
 
-  /// Builds custom light theme for consistent app styling
-  /// Uses Material 3 design with Poppins font and brand colors
-  ThemeData _buildTheme() {
-    return ThemeData(
-      useMaterial3: true,
-      brightness: Brightness.light,
-      primaryColor: const Color(0xFF4A6FA5),
 
-      // Color scheme based on seed color
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color(0xFF4A6FA5),
-        primary: const Color(0xFF4A6FA5),
-        secondary: const Color(0xFF6B9AC4),
-        tertiary: const Color(0xFF2C3E50),
-      ),
 
-      // Global font family
-      textTheme: GoogleFonts.poppinsTextTheme(),
 
-      // AppBar styling
-      appBarTheme: AppBarTheme(
-        backgroundColor: const Color(0xFF4A6FA5),
-        foregroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        titleTextStyle: GoogleFonts.poppins(
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-          color: Colors.white,
-        ),
-      ),
-
-      // Elevated button styling
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF4A6FA5),
-          foregroundColor: Colors.white,
-          elevation: 2,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-      ),
-
-      // Card styling
-      cardTheme: CardThemeData(
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        color: Colors.white,
-      ),
-
-      // Input field styling
-      inputDecorationTheme: InputDecorationTheme(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Color(0xFF4A6FA5), width: 2),
-        ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 16,
-        ),
-      ),
-    );
-  }
-}
