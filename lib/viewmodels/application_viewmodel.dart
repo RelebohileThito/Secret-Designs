@@ -1,5 +1,5 @@
 // ================================================================
-// Group: GROUP S
+// Group: Secret Design
 // Members:
 // - Lebohang Molise (224078106)
 // - Relebohile Thito (221027701)
