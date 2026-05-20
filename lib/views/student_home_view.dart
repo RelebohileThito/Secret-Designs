@@ -66,7 +66,7 @@ class _StudentHomeViewState extends State<StudentHomeView> {
     }
   }
 
-   // ================================================================
+  // ================================================================
   // UI BUILD METHOD
   // ================================================================
 
@@ -432,4 +432,3 @@ class _StudentHomeViewState extends State<StudentHomeView> {
     );
   }
 }
-
