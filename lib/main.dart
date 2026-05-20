@@ -20,7 +20,6 @@ void main() async {
   // Initialize Supabase connection with project credentials
   await Supabase.initialize(
     url: 'https://yjxcrjbcidsgkefamsbo.supabase.co',
-
     anonKey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlqeGNyamJjaWRzZ2tlZmFtc2JvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1OTU2NzYsImV4cCI6MjA5NDE3MTY3Nn0.dLGDSTAtN-fQ6MgfcQ_mZVcZMoDiUFmPBOg_cF0S8Ys',
   );
