@@ -90,4 +90,3 @@ class SplashView extends StatelessWidget {
     return const CircularProgressIndicator(color: Colors.white);
   }
 }
-
